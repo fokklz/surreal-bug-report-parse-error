@@ -37,10 +37,12 @@ async fn main() {
     tracing::info!("Connected. Signed in as root.");
 
     // will always fail
-    if let Ok(data) = DB.query("INFO FOR SCOPE users;").await {
+    if let Ok(data) = DB.query("INFO FOR SCOPE users").await {
         tracing::info!("Data: {:?}", data);
     }
-    if let Ok(data) = DB.query("INFO FOR NS;").await {
+    if let Ok(data) = DB.query("INFO FOR NS").await {
         tracing::info!("Data: {:?}", data);
     }
+
+    tracing::info!("Never reached btw.");
 }
