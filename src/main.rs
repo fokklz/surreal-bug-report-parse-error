@@ -16,13 +16,14 @@ async fn main() {
         return;
     }
 
-    if let Err(e) = DB.use_ns("dx-surreal").use_db("dx-surreal").await {
+    // switch using the query on line 40
+    /*if let Err(e) = DB.use_ns("dx-surreal").use_db("dx-surreal").await {
         tracing::error!("Failed to select namespace and database: {:?}", e);
         return;
-    }
+    }*/
 
     /*
-    Commented out to simplify reproducing the issue.
+    //Commented out to simplify reproducing the issue.
     if let Err(e) = DB
         .signin(Root {
             username: "root",
@@ -35,6 +36,11 @@ async fn main() {
     }*/
 
     tracing::info!("Connected. Signed in as root.");
+
+    let _ = DB.query("USE NS app DB data").await.unwrap();
+
+    // never reached
+    tracing::info!("Switched namespace and database.");
 
     // will always fail
     if let Ok(data) = DB.query("INFO FOR SCOPE users").await {
